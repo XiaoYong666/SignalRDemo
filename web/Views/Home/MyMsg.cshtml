@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Message";
+}
+<h2>我的消息</h2>
+<br>
+
+<ul class="form-group" id="messagesListUl"></ul>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/signalr/dist/signalr.js"></script>
+<script src="~/js/mysignalr.js"></script>
+<script type="text/javascript">
+    //signalr_connection在mysignalr.js定义
+    signalr_connection.on("ReceiveMessage", function(data) {
+        const li = document.createElement("li");
+        li.textContent = data.message;
+        document.getElementById("messagesListUl").appendChild(li);
+    });
+</script>

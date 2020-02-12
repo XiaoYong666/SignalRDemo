@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "Post";
+}
+
+
+
+<form>
+    <div class="form-group">
+      <label for="userid">UserID:</label>
+      <input type="text" class="form-control" id="userid" name="userid">
+    </div>
+    <div class="form-group">
+      <label for="message">内容:</label>
+      <textarea rows="5" cols="20" id="message" name="message" class="form-control"></textarea>
+    </div>
+    <input type="button" onclick="btnSendMsg()" value="发送">
+</form>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<!-- 引用signalr.js -->
+<script src="~/lib/signalr/dist/signalr.js"></script>
+<script type="text/javascript">
+    //发送消息
+    function btnSendMsg(){
+        var userid = $.trim($("#userid").val());
+        var message = $.trim($("#message").val());
+        var params={};
+        params.userid=userid;
+        params.message=message;
+        $.ajax({
+            url:'/home/PostData',
+            type:'post',
+            data:params,
+            dataType:'json',
+            async:true,
+            success:function(data){
+               if(data.code=='success'){
+                    alert(data.msg);
+                }
+                else{
+                    alert("发送失败");
+                }
+            }
+        });
+
+        //var message = $.trim($("#message").val());
+        //fetch("/home/PostData",{method:"POST"})
+        //.then(response=>response.text())
+        //.then(id=>connection.invoke("PostData", message).catch(err => console.error("发送失败："+err.toString())));
+    }
+</script>

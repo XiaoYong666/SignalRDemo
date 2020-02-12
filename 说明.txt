@@ -1,0 +1,14 @@
+1、引用Microsoft.AspNetCore.SignalR.dll
+
+2、自定义类MyHub继承Hub
+
+3、Startup的ConfigureServices方法中添加services.AddSignalR();
+
+4、Startup的Configure方法中设置SignalR路由，如下：
+            app.UseSignalR(routes=>{
+                routes.MapHub<MyHub>("/MyHub");
+            });
+
+5、前端引用signalr.js
+
+6、html页面创建、启动连接对象connection、绑定事件、发送消息（如Chat.cshtml页面）
